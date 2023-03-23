@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'Utils/styles.dart';
+import 'Utils/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +51,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int? _score;
+  double _progress = 0;
+
+  double _calcProgress() {
+    return _score! % 10 / 10;
+  }
+
+  void _initializeScore() {
+    _score =
+        0; /*Placeholder use the useres current score as initilization
+    Get the score from the database for the user account
+    */
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -58,7 +73,20 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      _score = 1 + _score!;
+      _progress = _calcProgress();
     });
+  }
+
+  void changeScore(int delta) {
+    _score = delta + _score!;
+    //Write Score back to user account
+  }
+
+  @override
+  void initState() {
+    _initializeScore();
+    super.initState();
   }
 
   @override
@@ -73,7 +101,49 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Spacer(
+                  flex: 1,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.account_circle),
+                  iconSize: 40,
+                  onPressed: () {},
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+                Flexible(
+                  flex: 8,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: LinearProgressIndicator(
+                      backgroundColor: AppColors.white,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(AppColors.accent),
+                      value: _progress,
+                      minHeight: 20,
+                    ),
+                  ),
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: _score.toString(), style: AppTextStyles.scoreStyle),
+                ),
+                const Spacer(
+                  flex: 1,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it

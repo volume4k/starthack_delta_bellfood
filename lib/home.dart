@@ -2,8 +2,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'Utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+
 
 
 class Home extends StatelessWidget {
@@ -53,6 +58,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  var user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -68,9 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
+
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: GetUserName(user!.uid),
+        // Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -85,8 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-
-        ),
+        // ),
       ),
 
       bottomNavigationBar: BottomNavigationBar(
@@ -111,6 +119,44 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: AppColors.mainColor,
         unselectedItemColor: AppColors.unselectedColor,
       ),
+    );
+  }
+}
+
+class GetUserName extends StatelessWidget {
+  final String documentId;
+
+  GetUserName(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+        if (snapshot.hasError) {
+          if (snapshot.error != null) {
+            log(snapshot.error.toString());
+            return Text(snapshot.error.toString());
+          }
+          return const Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return const Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          return Text("Full Name: ${data['first_name']} ${data['name']} Job Title: ${data['role']} Birtdate: ${data['birthdate'].toDate()} ");
+        }
+
+        return const Text("loading");
+      },
     );
   }
 }

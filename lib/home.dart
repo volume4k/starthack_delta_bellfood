@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:starthack_delta_bellfood/Utils/styles.dart';
 import 'package:starthack_delta_bellfood/ecopoints_shop.dart';
+import 'package:starthack_delta_bellfood/search.dart';
+import 'AddActivity.dart';
 import 'Utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -121,6 +123,18 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const Home()),
+            );
+          }
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Search()),
+            );
+          }
+          if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddAcitivity()),
             );
           }
           if (index == 3) {

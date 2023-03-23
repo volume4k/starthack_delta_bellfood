@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:starthack_delta_bellfood/home.dart';
-import 'package:starthack_delta_bellfood/search.dart';
 import 'AddActivity.dart';
+import 'Ecopoints_Shop.dart';
 import 'Utils/app_colors.dart';
 
-class EcopointsShop extends StatelessWidget {
-  const EcopointsShop({super.key});
+class Search extends StatelessWidget {
+  const Search({super.key});
 
   // This widget is the root of your application.
   @override
@@ -14,11 +14,11 @@ class EcopointsShop extends StatelessWidget {
 
 
     return MaterialApp(
-      title: 'Ecopoints Shop',
+      title: 'Search',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Ecopoints Shop'),
+      home: const MyHomePage(title: 'Search'),
     );
   }
 }
@@ -42,36 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
 
-      body:
-      GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: AppColors.mainColor,
-            child: const Text("holiday"),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: AppColors.mainColor,
-            child: const Text('money'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: AppColors.mainColor,
-            child: const Text('donate'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: AppColors.mainColor, 
-            child: const Text("lunch"),
-          ),
-        ],
-      ),
 
       bottomNavigationBar: GNav(
         backgroundColor: AppColors.navigationBarBackgroundColor,

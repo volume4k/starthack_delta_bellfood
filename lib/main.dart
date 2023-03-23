@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'Utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:starthack_delta_bellfood/screens/login_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {

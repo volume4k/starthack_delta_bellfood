@@ -123,6 +123,41 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class AddUser extends StatelessWidget {
+  final String name;
+  final String first_name;
+  final String role;
+  final DateTime birthdate;
+
+  AddUser(this.name, this.first_name, this.role, this.birthdate);
+
+  @override
+  Widget build(BuildContext context) {
+    // Create a CollectionReference called users that references the firestore collection
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .add({
+        'name': name,
+        'first_name': first_name,
+        'role': role,
+        'birthdate': birthdate
+      })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
+    return TextButton(
+      onPressed: addUser,
+      child: const Text(
+        "Add User",
+      ),
+    );
+  }
+}
+
 class GetUserName extends StatelessWidget {
   final String documentId;
 

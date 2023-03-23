@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:starthack_delta_bellfood/home.dart';
 import 'Utils/app_colors.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class EcopointsShop extends StatelessWidget {
+  const EcopointsShop({super.key});
 
   // This widget is the root of your application.
   @override
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ecopoints Shop',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -37,7 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: GridView.count(
+
+      body:
+      GridView.count(
         primary: false,
         padding: const EdgeInsets.all(20),
         crossAxisSpacing: 10,
@@ -67,27 +71,44 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: GNav(
+        backgroundColor: AppColors.navigationBarBackgroundColor,
+        color: AppColors.navigationBarIconColor,
+        activeColor: AppColors.navigationBarIconColor,
+        tabBackgroundColor: AppColors.navigationBarTabBackgroundColor,
+        gap: 8, //Abstand zwischen den Symbolen und Zeichen
+        onTabChange: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
+          }
+          if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const EcopointsShop()),
+            );
+          }
+        },
+        tabs: const [
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+          GButton(
+            icon: Icons.search,
+            text: 'Search',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Add Activity',
+          GButton(
+            icon: Icons.add_circle_outline,
+            text: 'Add Activity',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_shopping_cart),
-            label: 'Ecocoin Shop',
+          GButton(
+            icon: Icons.add_shopping_cart,
+            text: 'Ecocoin Shop',
           ),
         ],
-        selectedItemColor: AppColors.mainColor,
-        unselectedItemColor: AppColors.unselectedColor,
       ),
     );
   }

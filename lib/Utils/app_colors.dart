@@ -10,4 +10,7 @@ class AppColors {
   static const Color backgroundColor = Color.fromARGB(255, 55, 52, 52);
   static const Color white = Color(0xFFFFFFFF);
   static const Color accent = Color(0xFE00FF0F);
+  static const Color navigationBarBackgroundColor = Color(0xFF1E1E1E);
+  static const Color navigationBarIconColor = Color(0xFFBDBDBD);
+  static const Color navigationBarTabBackgroundColor = Color.fromARGB(255, 170, 170, 170);
 }

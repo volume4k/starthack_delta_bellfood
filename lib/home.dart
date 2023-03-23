@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:starthack_delta_bellfood/Utils/styles.dart';
+import 'package:starthack_delta_bellfood/ecopoints_shop.dart';
 import 'Utils/app_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +12,8 @@ import 'firebase_options.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    int _selectedIndex = 0;
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -102,33 +109,55 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-        ),
-      ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: GNav(
+        backgroundColor: AppColors.navigationBarBackgroundColor,
+        color: AppColors.navigationBarIconColor,
+        activeColor: AppColors.navigationBarIconColor,
+        tabBackgroundColor: AppColors.navigationBarTabBackgroundColor,
+        gap: 8, //Abstand zwischen den Symbolen und Zeichen
+        onTabChange: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
+          }
+          if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const EcopointsShop()),
+            );
+          }
+        },
+        tabs: const [
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+          GButton(
+            icon: Icons.search,
+            text: 'Search',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Add Activity',
+          GButton(
+            icon: Icons.add_circle_outline,
+            text: 'Add Activity',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_shopping_cart),
-            label: 'Ecocoin Shop',
+          GButton(
+            icon: Icons.add_shopping_cart,
+            text: 'Ecocoin Shop',
           ),
         ],
-        selectedItemColor: AppColors.mainColor,
-        unselectedItemColor: AppColors.unselectedColor
       ),
+
+      
+
     );
   }
+
+  void _onItemTapped(int index, int _selectedIndex) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      }
 }

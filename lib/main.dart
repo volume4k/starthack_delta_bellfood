@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:starthack_delta_bellfood/ecopoints_shop.dart';
 import 'firebase_options.dart';
 import 'home.dart';
 import 'login_page.dart';
@@ -36,7 +37,7 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.hasData && snapshot.data?.uid != null) {
           return const Home();
         } else {
-          return LoginPage();
+          return const Home(); //LoginPage()
         }
       },
     );
